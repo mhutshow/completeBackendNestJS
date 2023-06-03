@@ -22,52 +22,112 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+# Task Management API Documentation
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This documentation provides an overview of the Task Management API, implemented using NestJS. The API allows you to manage tasks with various statuses. The main data structure used in the API is the `Task` object, which has the following properties:
 
-## Installation
+## Task Object
 
-```bash
-$ yarn install
+```typescript
+export interface Task {
+    id: string;
+    title: string;
+    description: string;
+    status: TaskStatus;
+}
 ```
 
-## Running the app
+The `Task` object represents an individual task in the system. It contains the following properties:
 
-```bash
-# development
-$ yarn run start
+- `id` (string): A unique identifier for the task.
+- `title` (string): The title or name of the task.
+- `description` (string): A description or additional details about the task.
+- `status` (TaskStatus): The current status of the task. It is an enumeration defined as `TaskStatus`.
 
-# watch mode
-$ yarn run start:dev
+## TaskStatus Enumeration
 
-# production mode
-$ yarn run start:prod
+```typescript
+export enum TaskStatus {
+    OPEN = 'OPEN',
+    IN_PROGRESS = 'IN_PROGRESS',
+    DONE = 'DONE',
+}
 ```
 
-## Test
+The `TaskStatus` enumeration represents the possible statuses that a task can have. It includes the following values:
 
-```bash
-# unit tests
-$ yarn run test
+- `OPEN`: The task is open and has not been started yet.
+- `IN_PROGRESS`: The task is currently being worked on.
+- `DONE`: The task has been completed.
 
-# e2e tests
-$ yarn run test:e2e
+## API Endpoints
 
-# test coverage
-$ yarn run test:cov
-```
+The Task Management API provides the following endpoints for managing tasks:
 
-## Support
+### GET /tasks
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Retrieve a list of all tasks in the system.
 
-## Stay in touch
+#### Response
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Status code: 200
+- Body: An array of `Task` objects representing the tasks in the system.
 
-## License
+### GET /tasks/{id}
 
-Nest is [MIT licensed](LICENSE).
+Retrieve a specific task by its ID.
+
+#### Parameters
+
+- `id` (string): The unique identifier of the task to retrieve.
+
+#### Response
+
+- Status code: 200
+- Body: The `Task` object representing the retrieved task.
+
+### POST /tasks
+
+Create a new task.
+
+#### Request Body
+
+- Body: The `Task` object representing the task to be created.
+
+#### Response
+
+- Status code: 201
+- Body: The `Task` object representing the created task.
+
+### PUT /tasks/{id}
+
+Update an existing task by its ID.
+
+#### Parameters
+
+- `id` (string): The unique identifier of the task to update.
+
+#### Request Body
+
+- Body: The `Task` object representing the updated task properties.
+
+#### Response
+
+- Status code: 200
+- Body: The `Task` object representing the updated task.
+
+### DELETE /tasks/{id}
+
+Delete a specific task by its ID.
+
+#### Parameters
+
+- `id` (string): The unique identifier of the task to delete.
+
+#### Response
+
+- Status code: 204
+
+## Conclusion
+
+This documentation provides an overview of the Task Management API implemented using NestJS. It describes the structure of the `Task` object, the `TaskStatus` enumeration, and the available API endpoints for managing tasks. With this API, you can perform operations such as retrieving tasks, creating new tasks, updating task details, and deleting tasks.
