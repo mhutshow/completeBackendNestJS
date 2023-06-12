@@ -1,101 +1,113 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
-import { Task, TaskStatus } from './tasks.model';
+import { TaskStatus } from './task-status.enum';
 
-import {v4 as uuid} from 'uuid'
 import { CreateTaskDto } from './dto/create-task.dto';
 import {GetTasksFilterDto} from "./dto/getTasks-Filter.dto";
+import {TaskRepository} from "./task.repository";
+import {InjectRepository} from "@nestjs/typeorm";
+import {Task} from "./task.entity";
 
 @Injectable()
 export class TasksService {
 
-    private tasks: Task[] = [];
+    constructor(
 
-    getAllTasks() : Task []{
-
-
-
+        @InjectRepository(TaskRepository)
+        private taskRepository : TaskRepository) {}
 
 
 
-        return this.tasks;
+
+    //
+    // getAllTasks() : Task []{
+    //
+    //
+    //
+    //
+    //
+    //
+    //     return this.tasks;
+    //
+    //
+    //
+    // }
+    //
 
 
+         async getTaskById(id: string) : Promise<Task>{
 
-    }
+        const found = await  this.taskRepository.findOne(id);
 
-    getTaskById(id:string){
+             console.log(found)
 
-    const found = this.tasks.find((task)=> id == task.id)
-        if(!found) {
+        if(!found){
             throw new NotFoundException();
+        } else {
+            return found;
         }
 
+         }
 
 
-        return found ;
 
+    // getTaskById(id:string){
+    //
+    // const found = this.tasks.find((task)=> id == task.id)
+    //     if(!found) {
+    //         throw new NotFoundException();
+    //     }
+    //
+    //
+    //
+    //     return found ;
+    //
+    // }
+    //
+    // deleteTask(id:string){
+    //
+    //     this.tasks = this.tasks.filter((task)=> id != task.id);
+    //
+    //     return "Item Deleted : " + id
+    //
+    // }
+    //
+     createTask(createTaskDto: CreateTaskDto): Promise<Task> {
+    
+     return this.taskRepository.createTask(createTaskDto);
     }
+    //
+    // updateTaskStatus(id: string , status)  {
+    //     const task = this.getTaskById(id)
+    //     console.log(task.status);
+    //     console.log(status)
+    //     task.status = status;
+    //     return task;
+    // }
+    //
+    // getTaskWithFilter(filterDto: GetTasksFilterDto) : Task []{
+    //
+    //     const {status , search } = filterDto;
+    //
+    //     let tasks= this.getAllTasks();
+    //
+    //     if(status){
+    //         tasks= tasks.filter((t) => t.status ==status);
+    //
+    //     }
+    //
+    //     if(search){
+    //         tasks = tasks.filter(t => {
+    //             if(t.title.toLowerCase().includes(search.toLowerCase()) || t.description.includes(search)){
+    //               return true;
+    //             };
+    //         })
+    //
+    //         console.log(tasks.length)
+    //
+    //         return  tasks;
+    //
+    //     }
 
-    deleteTask(id:string){
-
-        this.tasks = this.tasks.filter((task)=> id != task.id);
-
-        return "Item Deleted : " + id
-
-    }
-
-    createTask(createTaskDto: CreateTaskDto): Task {
-
-        const {description , title} = createTaskDto
-
-     const task : Task = {
-
-        id : uuid(),
-        description : description,
-        status: TaskStatus.OPEN,
-        title : title
-     }
-
-     this.tasks.push(task);
-     return task;
-    }
-
-    updateTaskStatus(id: string , status)  {
-        const task = this.getTaskById(id)
-        console.log(task.status);
-        console.log(status)
-        task.status = status;
-        return task;
-    }
-
-    getTaskWithFilter(filterDto: GetTasksFilterDto) : Task []{
-
-        const {status , search } = filterDto;
-
-        let tasks= this.getAllTasks();
-
-        if(status){
-            tasks= tasks.filter((t) => t.status ==status);
-
-        }
-
-        if(search){
-            tasks = tasks.filter(t => {
-                if(t.title.toLowerCase().includes(search.toLowerCase()) || t.description.includes(search)){
-                  return true;
-                };
-            })
-
-            console.log(tasks.length)
-
-            return  tasks;
-
-        }
-
-
-
-
-
-    }
+   // }
 
 }
