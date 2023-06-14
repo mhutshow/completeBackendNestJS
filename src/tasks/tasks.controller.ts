@@ -11,17 +11,16 @@ import {Task} from "./task.entity";
 export class TasksController {
     constructor( private taskService : TasksService) { }
 
-    // @Get()
-    // getAllTasks(@Query() filterDto: GetTasksFilterDto) : Task []{
-    //     if(Object.keys(filterDto).length){
-    //         console.log(filterDto)
-    //         return this.taskService.getTaskWithFilter(filterDto);
-    //     } else{
-    //         return this.taskService.getAllTasks();
-    //     }
-    //    // return this.taskService.getAllTasks();
-    // }
-    //
+    @Get()
+    getAllTasks(@Query() filterDto: GetTasksFilterDto) : Promise<Task[]>{
+
+
+        
+
+        return this.taskService.getAllTasks(filterDto);
+       // return this.taskService.getAllTasks();
+    }
+    
 
     @Get('/:id')
     getTaskById(@Param('id') id:string): Promise <Task>{
@@ -31,19 +30,10 @@ export class TasksController {
     }
 
 
-
-    // @Get('/:id')
-    // getTaskById(@Param('id') id: string): any {
-    //
-    //
-    //
-    //    return this.taskService.getTaskById(id);
-    // }
-    //
-    // @Delete('/:id')
-    // deleteTask(@Param('id') id: string): any {
-    //    return this.taskService.deleteTask(id);
-    // }
+    @Delete('/:id')
+    deleteTask(@Param('id') id: string): any {
+       return this.taskService.deleteTask(id);
+    }
     //
     @Post()
     createTask(@Body() createTaskDto: CreateTaskDto): Promise <Task> {
@@ -55,14 +45,14 @@ export class TasksController {
     
     }
     //
-    // @Patch('/:id/status')
-    // updateTaskStatus(@Param('id' ) id : string , @Body() updateTaskDto: UpdateTaskStatusDto  ) : Task{
-    //
-    //     const {status} = updateTaskDto;
-    //
-    //     return this.taskService.updateTaskStatus(id , status);
-    //
-    // }
+    @Patch('/:id/status')
+    updateTaskStatus(@Param('id' ) id : string , @Body() updateTaskDto: UpdateTaskStatusDto  ) : Promise<Task>{
+    
+        const {status} = updateTaskDto;
+    
+        return this.taskService.updateTaskStatus(id , status);
+    
+    }
   
 
 
