@@ -6,22 +6,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TasksModule = void 0;
+exports.AuthModule = void 0;
 const common_1 = require("@nestjs/common");
-const tasks_controller_1 = require("./tasks.controller");
-const tasks_service_1 = require("./tasks.service");
+const auth_service_1 = require("./auth.service");
+const auth_controller_1 = require("./auth.controller");
 const typeorm_1 = require("@nestjs/typeorm");
-const task_repository_1 = require("./task.repository");
-let TasksModule = class TasksModule {
+const user_repository_1 = require("./user.repository");
+let AuthModule = class AuthModule {
 };
-TasksModule = __decorate([
+AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([task_repository_1.TaskRepository])
+            typeorm_1.TypeOrmModule.forFeature([user_repository_1.UserRepository])
         ],
-        controllers: [tasks_controller_1.TasksController],
-        providers: [tasks_service_1.TasksService],
+        providers: [auth_service_1.AuthService],
+        controllers: [auth_controller_1.AuthController]
     })
-], TasksModule);
-exports.TasksModule = TasksModule;
-//# sourceMappingURL=tasks.module.js.map
+], AuthModule);
+exports.AuthModule = AuthModule;
+//# sourceMappingURL=auth.module.js.map

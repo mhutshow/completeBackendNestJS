@@ -9,17 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateTaskDto = void 0;
-const class_validator_1 = require("class-validator");
-class CreateTaskDto {
-}
+exports.User = void 0;
+const typeorm_1 = require("typeorm");
+let User = class User {
+};
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
-], CreateTaskDto.prototype, "title", void 0);
+], User.prototype, "id", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)
-], CreateTaskDto.prototype, "description", void 0);
-exports.CreateTaskDto = CreateTaskDto;
-//# sourceMappingURL=create-task.dto.js.map
+], User.prototype, "username", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], User.prototype, "password", void 0);
+User = __decorate([
+    (0, typeorm_1.Entity)()
+], User);
+exports.User = User;
+//# sourceMappingURL=user.entity.js.map

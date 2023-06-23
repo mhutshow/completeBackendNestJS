@@ -9,17 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateTaskDto = void 0;
+exports.UpdateTaskStatusDto = void 0;
+const task_status_enum_1 = require("../task-status.enum");
 const class_validator_1 = require("class-validator");
-class CreateTaskDto {
+class UpdateTaskStatusDto {
 }
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsEnum)(task_status_enum_1.TaskStatus),
     __metadata("design:type", String)
-], CreateTaskDto.prototype, "title", void 0);
-__decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], CreateTaskDto.prototype, "description", void 0);
-exports.CreateTaskDto = CreateTaskDto;
-//# sourceMappingURL=create-task.dto.js.map
+], UpdateTaskStatusDto.prototype, "status", void 0);
+exports.UpdateTaskStatusDto = UpdateTaskStatusDto;
+//# sourceMappingURL=updateTaskStatus.dto.js.map

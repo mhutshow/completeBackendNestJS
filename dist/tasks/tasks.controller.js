@@ -16,12 +16,14 @@ exports.TasksController = void 0;
 const common_1 = require("@nestjs/common");
 const tasks_service_1 = require("./tasks.service");
 const create_task_dto_1 = require("./dto/create-task.dto");
-let TasksController = exports.TasksController = class TasksController {
+const getTasks_Filter_dto_1 = require("./dto/getTasks-Filter.dto");
+const updateTaskStatus_dto_1 = require("./dto/updateTaskStatus.dto");
+let TasksController = class TasksController {
     constructor(taskService) {
         this.taskService = taskService;
     }
-    getAllTasks() {
-        return this.taskService.getAllTasks();
+    getAllTasks(filterDto) {
+        return this.taskService.getAllTasks(filterDto);
     }
     getTaskById(id) {
         return this.taskService.getTaskById(id);
@@ -30,22 +32,26 @@ let TasksController = exports.TasksController = class TasksController {
         return this.taskService.deleteTask(id);
     }
     createTask(createTaskDto) {
-        const task = this.taskService.createTask(createTaskDto);
-        return task;
+        return this.taskService.createTask(createTaskDto);
+    }
+    updateTaskStatus(id, updateTaskDto) {
+        const { status } = updateTaskDto;
+        return this.taskService.updateTaskStatus(id, status);
     }
 };
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Array)
+    __metadata("design:paramtypes", [getTasks_Filter_dto_1.GetTasksFilterDto]),
+    __metadata("design:returntype", Promise)
 ], TasksController.prototype, "getAllTasks", null);
 __decorate([
     (0, common_1.Get)('/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", Promise)
 ], TasksController.prototype, "getTaskById", null);
 __decorate([
     (0, common_1.Delete)('/:id'),
@@ -59,10 +65,19 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_task_dto_1.CreateTaskDto]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", Promise)
 ], TasksController.prototype, "createTask", null);
-exports.TasksController = TasksController = __decorate([
+__decorate([
+    (0, common_1.Patch)('/:id/status'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, updateTaskStatus_dto_1.UpdateTaskStatusDto]),
+    __metadata("design:returntype", Promise)
+], TasksController.prototype, "updateTaskStatus", null);
+TasksController = __decorate([
     (0, common_1.Controller)('tasks'),
     __metadata("design:paramtypes", [tasks_service_1.TasksService])
 ], TasksController);
+exports.TasksController = TasksController;
 //# sourceMappingURL=tasks.controller.js.map
